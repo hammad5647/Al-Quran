@@ -6,12 +6,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SurahClient {
     companion object {
 
-        private const val URL = "https://api.quran.com/api/v4/"
-        var retrofit: Retrofit? = null
+        private const val SURAHNAMES = "https://api.quran.com/api/v4/"
+        private const val FULLSURAHS = "https://al-quran1.p.rapidapi.com/"
+        private var retrofit: Retrofit? = null
 
-        fun retrofit(): Retrofit {
+        fun retroSurahNames(): Retrofit {
             if (retrofit == null) {
-                retrofit = Retrofit.Builder().baseUrl(URL)
+                retrofit = Retrofit.Builder().baseUrl(SURAHNAMES)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
+            return retrofit!!
+        }
+
+        fun retroSurahs(): Retrofit {
+            if (retrofit == null) {
+                retrofit = Retrofit.Builder().baseUrl(FULLSURAHS)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }

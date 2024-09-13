@@ -1,16 +1,18 @@
 package com.example.al_quran.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.al_quran.R
+import com.example.al_quran.activities.SurahActivity
 import com.example.al_quran.databinding.VersesSampleBinding
+import com.example.al_quran.models.ChaptersItem
 
-import com.example.al_quran.models.SurahListModel
-
-class SurahAdapter(private var list: MutableList<SurahListModel>) :
+class SurahAdapter(private var list: List<ChaptersItem?>?) :
     RecyclerView.Adapter<SurahAdapter.SurahViewHolder>() {
+
     class SurahViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var binding = VersesSampleBinding.bind(itemView)
     }
@@ -25,15 +27,20 @@ class SurahAdapter(private var list: MutableList<SurahListModel>) :
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list!!.size
     }
 
     override fun onBindViewHolder(holder: SurahViewHolder, position: Int) {
+        holder.binding.surahNumber.text = list?.get(position)!!.id.toString()
+        holder.binding.arabicName.text = list?.get(position)!!.nameArabic.toString()
+        holder.binding.surahName.text = list?.get(position)!!.nameSimple.toString()
+        holder.binding.totalVerse.text = list?.get(position)!!.versesCount.toString()
 
-        holder.binding.surahNumber.text = list[position].toString()
-        holder.binding.arabicName.text = list[position].toString()
-        holder.binding.surahName.text = list[position].toString()
-        holder.binding.totalVerse.text = list[position].toString()
+        holder.binding.versesSample.setOnClickListener {
+            var id = list!![position]!!.id.toString()
+            var intent = Intent(holder.itemView.context,SurahActivity::class.java)
+
+        }
 
     }
 
